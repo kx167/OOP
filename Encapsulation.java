@@ -16,7 +16,8 @@ public class Encapsulation {
             System.out.println("2. Employee Management");
             System.out.println("3. Bank Account Management");
             System.out.println("4. ATM Simulation");
-            System.out.println("5. Exit");
+            System.out.println("5. Library Management");
+            System.out.println("6. Exit");
 
             System.out.print("Enter your choice: ");
             choice = sc.nextInt();
@@ -24,9 +25,11 @@ public class Encapsulation {
 
             switch (choice) {
 
-                case 1:
+                // ==================================
+                // 1. STUDENT SECTION
+                // ==================================
 
-                    // STUDENT SECTION
+                case 1: {
 
                     System.out.println("\n===== STUDENT INFORMATION =====");
 
@@ -47,11 +50,14 @@ public class Encapsulation {
                     System.out.println("Marks: " + s1.getMarks());
 
                     break;
+                }
 
 
-                case 2:
+                // ==================================
+                // 2. EMPLOYEE SECTION
+                // ==================================
 
-                    // EMPLOYEE SECTION
+                case 2: {
 
                     System.out.println("\n===== EMPLOYEE MANAGEMENT =====");
 
@@ -79,11 +85,14 @@ public class Encapsulation {
                     System.out.println("Updated Salary: " + emp.getSalary());
 
                     break;
+                }
 
 
-                case 3:
+                // ==================================
+                // 3. BANK ACCOUNT SECTION
+                // ==================================
 
-                    // BANK ACCOUNT SECTION
+                case 3: {
 
                     System.out.println("\n===== BANK ACCOUNT MANAGEMENT =====");
 
@@ -96,7 +105,9 @@ public class Encapsulation {
                     System.out.print("Enter initial balance: ");
                     double initialBalance = sc.nextDouble();
 
-                    BankAccount bank = new BankAccount(holderName, accountNo, initialBalance);
+                    BankAccount bank = new BankAccount(
+                            holderName, accountNo, initialBalance
+                    );
 
                     System.out.println("\n----- Account Details -----");
                     System.out.println("Account Holder: " + bank.getAccountHolderName());
@@ -116,11 +127,14 @@ public class Encapsulation {
                     System.out.println("Final Balance: " + bank.getBalance());
 
                     break;
+                }
 
 
-                case 4:
+                // ==================================
+                // 4. ATM SECTION
+                // ==================================
 
-                    // ATM SECTION
+                case 4: {
 
                     System.out.println("\n===== ATM SIMULATION =====");
 
@@ -186,9 +200,79 @@ public class Encapsulation {
                     } while (atmChoice != 5);
 
                     break;
+                }
 
 
-                case 5:
+                // ==================================
+                // 5. LIBRARY MANAGEMENT SECTION
+                // ==================================
+
+                case 5: {
+
+                    System.out.println("\n===== LIBRARY MANAGEMENT =====");
+
+                    System.out.print("Enter Book ID: ");
+                    int bookId = sc.nextInt();
+                    sc.nextLine();
+
+                    System.out.print("Enter Book Name: ");
+                    String bookName = sc.nextLine();
+
+                    System.out.print("Enter Author Name: ");
+                    String author = sc.nextLine();
+
+                    System.out.print("Enter Book Price: ");
+                    double price = sc.nextDouble();
+
+                    System.out.print("Enter Available Copies: ");
+                    int copies = sc.nextInt();
+
+                    Book b1 = new Book(
+                            bookId, bookName, author, price, copies
+                    );
+
+                    System.out.println("\n----- Book Details -----");
+                    b1.displayBook();
+
+                    // Borrow books
+
+                    System.out.print("\nHow many copies do you want to borrow? ");
+                    int borrow = sc.nextInt();
+
+                    b1.borrowBook(borrow);
+
+                    // Return books
+
+                    System.out.print("\nHow many copies do you want to return? ");
+                    int returned = sc.nextInt();
+
+                    b1.returnBook(returned);
+
+                    // Add new copies
+
+                    System.out.print("\nHow many new copies do you want to add? ");
+                    int add = sc.nextInt();
+
+                    b1.addCopies(add);
+
+                    // Final details
+
+                    System.out.println("\n----- Final Book Details -----");
+                    b1.displayBook();
+
+                    System.out.println(
+                            "Total Book Value: " + b1.calculateBookValue()
+                    );
+
+                    break;
+                }
+
+
+                // ==================================
+                // 6. EXIT
+                // ==================================
+
+                case 6:
 
                     System.out.println("Thank you! Program closed.");
                     break;
@@ -200,7 +284,7 @@ public class Encapsulation {
 
             }
 
-        } while (choice != 5);
+        } while (choice != 6);
 
         sc.close();
     }
@@ -535,5 +619,180 @@ class ATM {
 
             }
         }
+    }
+}
+
+
+// ==========================================
+// 5. BOOK CLASS - LIBRARY MANAGEMENT
+// ==========================================
+
+class Book {
+
+    private int bookId;
+    private String bookName;
+    private String author;
+    private double price;
+    private int availableCopies;
+
+
+    // Parameterized constructor
+
+    public Book(int bookId, String bookName, String author,
+                double price, int availableCopies) {
+
+        setBookId(bookId);
+        setBookName(bookName);
+        setAuthor(author);
+        setPrice(price);
+        setAvailableCopies(availableCopies);
+    }
+
+
+    // Setters
+
+    public void setBookId(int bookId) {
+
+        if (bookId > 0) {
+            this.bookId = bookId;
+        } else {
+            System.out.println("Invalid Book ID!");
+        }
+    }
+
+    public void setBookName(String bookName) {
+
+        if (bookName != null && !bookName.trim().isEmpty()) {
+            this.bookName = bookName;
+        } else {
+            System.out.println("Invalid Book Name!");
+        }
+    }
+
+    public void setAuthor(String author) {
+
+        if (author != null && !author.trim().isEmpty()) {
+            this.author = author;
+        } else {
+            System.out.println("Invalid Author Name!");
+        }
+    }
+
+    public void setPrice(double price) {
+
+        if (price > 0) {
+            this.price = price;
+        } else {
+            System.out.println("Price must be greater than zero!");
+        }
+    }
+
+    public void setAvailableCopies(int availableCopies) {
+
+        if (availableCopies >= 0) {
+            this.availableCopies = availableCopies;
+        } else {
+            System.out.println("Copies cannot be negative!");
+        }
+    }
+
+
+    // Getters
+
+    public int getBookId() {
+        return bookId;
+    }
+
+    public String getBookName() {
+        return bookName;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public int getAvailableCopies() {
+        return availableCopies;
+    }
+
+
+    // Display book information
+
+    public void displayBook() {
+
+        System.out.println("Book ID: " + getBookId());
+        System.out.println("Book Name: " + getBookName());
+        System.out.println("Author: " + getAuthor());
+        System.out.println("Price: " + getPrice());
+        System.out.println("Available Copies: " + getAvailableCopies());
+    }
+
+
+    // Add copies
+
+    public void addCopies(int copies) {
+
+        if (copies > 0) {
+
+            availableCopies += copies;
+
+            System.out.println("Copies added successfully!");
+            System.out.println("Available Copies: " + availableCopies);
+
+        } else {
+
+            System.out.println("Please enter a valid quantity!");
+
+        }
+    }
+
+
+    // Borrow books
+
+    public void borrowBook(int copies) {
+
+        if (copies > 0 && copies <= availableCopies) {
+
+            availableCopies -= copies;
+
+            System.out.println("Borrow successful!");
+            System.out.println("Available Copies: " + availableCopies);
+
+        } else {
+
+            System.out.println("Insufficient copies or invalid quantity!");
+
+        }
+    }
+
+
+    // Return books
+
+    public void returnBook(int copies) {
+
+        if (copies > 0) {
+
+            availableCopies += copies;
+
+            System.out.println("Book returned successfully!");
+            System.out.println("Available Copies: " + availableCopies);
+
+        } else {
+
+            System.out.println("Invalid return quantity!");
+
+        }
+    }
+
+
+    // Calculate total inventory value
+
+    public double calculateBookValue() {
+
+        return price * availableCopies;
     }
 }
